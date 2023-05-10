@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="site-main">
+    <body class="c_body">
+        <div class="container_cntct">
+        <div class="heading_cntct">Connect with Us!</div>
+            <div class="heading_cntct_2">If you have any questions, please contact tamuusa.publicrelations@gmail.com or fill out the form at the very bottom!
+            </div>
+        </div>
+            <div class="cont_card_wrap"> <!--'create social media cards here'-->
+                <div class="cont_card_item">
+                    <div class="cont_card_inner">
+                      <a href="https://www.linkedin.com">
+                        <img src="./img/linkedin-logo-white-png-4.png">
+                        <div class="s_media">LinkedIn</div>
+                        <div class="s_media_p">Follow ME on linkedin here to stay updated on the latest
+                        </div>
+                      </a>
+                    </div>
+                </div>
+                <div class="cont_card_item">
+                    <div class="cont_card_inner">
+                      <a href="https://www.instagram.com">
+                        <img src="./img/instagram_img_b.png" >
+                        <div class="s_media">Instagram</div>
+                        <div class="s_media_p">Click or search to follow us @tamumsa for the latest updates on our posts and stories!
+                        </div>
+                      </a>
+                    </div>
+                </div>
+                <div class="cont_card_item">
+                    <div class="cont_card_inner">
+                      <a href="https://www.facebook.com/tamumsa/">
+                        <img src="./img/facebook_logo.png">
+                        <div class="s_media">Facebook</div>
+                        <div class="s_media_p">Click or search for Muslim Students' Association of Texas A&M University and like our page!
+                        </div>
+                      </a>
+                    </div>
+                </div>
+                <div class="cont_card_item">
+                    <div class="cont_card_inner">
+                      <a href="">
+                        <img src="./img/mail_logo.png">
+                        <div class="s_media">Email</div>
+                        <div class="s_media_p">Subscribe for Emails to stay updated
+                        </div>
+                      </a>
+                    </div>
+                </div>
+            </div>
+        <div class="FormContainer">
+          <div class="contactInfo">
+            <div class="c_box">
+              <div class="text">
+                <h3>Address</h3>
+                <p>417 Stasney St, College Station, TX 77840</p>
+              </div>
+            </div>
+            <div class="c_box">
+              <div class="text">
+                <h3>Hours</h3>
+                <p>5AM-1AM</p>
+              </div>
+            </div>
+              <div class="c_box">
+                <div class="text">
+                  <h3>Phone</h3>
+                  <p>(979) 846-4222</p>
+                </div>
+              </div>
+          </div>
+
+          <div class = "contact_form">
+            <form action= 'http://localhost:5000/insert' method="POST" >
+              <h2>Send us a Message</h2>
+                <div class="input_box">
+                  <input type="text" name ="name" required="required">
+                  <span>Full Name</span> <!--span as tranformation in style.css-->
+                </div> 
+                <div class="input_box">
+                  <input type="email" name ="email" required="required">
+                  <span>Email</span>
+                </div>
+                <div class="input_box">
+                  <textarea name = 'message' required="required"></textarea>
+                  <span>Type your Message...</span>
+                </div>
+                <div class="input_box">
+                  <input type="submit" name ="submit" value="Send">
+                </div>
+            </form>
+          </div>
+        </div>           
+      </body>
+{% endblock %}
+
+    
+
