@@ -94,8 +94,9 @@
 }
 
 
-a.active,a:hover{
+.nav-item a.active,a:hover{
   background: #9ca4af;
+  border-radius: 20%;
   transition: .5s;
 }
 .checkbtn{
@@ -179,8 +180,20 @@ a.active,a:hover{
   margin-right: 15px ;
 }
 
-/* Porfolio Box Starts Here*/
+/* Porfolio index Starts Here*/
+/*background image for index page*/
+.section-body{
+  height: 300px;
+  width: 100%;
+  background-position: center;
+  background-repeat:no-repeat ;
+  transition: background-image 0.5s ease-in-out;
+}
 
+.section-body img {
+  width: 100%;
+  height: auto;
+}
 
 /* Porfolio ends*/
 
@@ -199,14 +212,17 @@ a.active,a:hover{
     justify-content: center;
     flex-direction: column;
     background-image:
-    linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)),
-    url(/img/icbcLogo.png);
+    linear-gradient(to bottom, rgba(95, 167, 157, 0.52), rgba(255, 255, 255, 0.73));
     background-attachment: fixed top;
     background-position: top;
     width: 100%;
     background-size: cover;
     color: white;
     
+  }
+  .container_cntct img{
+    width: 100%;
+    height: auto;
   }
 
   .container_cntct .heading_cntct{
@@ -366,11 +382,11 @@ a.active,a:hover{
     margin: auto;
     display: block;
   }
-  .cont_card_wrap .cont_card_inner img:before{
+  .cont_card_wrap .cont_card_inner img:before{ /*I should probably change this image to not transform and have the size be fixed*/
     transition: transform 1s ease-out ;
   }
   .cont_card_wrap .cont_card_inner img:hover:before{
-    transform: scale(2.15);
+    transform: scale(1);
   }
 
   .cont_card_wrap .cont_card_inner .s_media{

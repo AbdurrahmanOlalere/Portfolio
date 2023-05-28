@@ -1,5 +1,6 @@
 from flask import Flask, render_template,request
 import db as db
+import mail as mail
 
 app = Flask(__name__)
 
@@ -18,6 +19,7 @@ def insert():
         name = request.form['name']
         email = request.form['email']
         message = request.form['message']
+        mail.send_email(name,email,message)
         db.insert_details(name,email,message)
         details = db.get_details()
         print(details)

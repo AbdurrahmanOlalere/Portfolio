@@ -4,6 +4,7 @@
 <main class="site-main">
     <body class="c_body">
         <div class="container_cntct">
+          <img src="{{ url_for('static', filename='img/swords.png/sword_1.png') }}" alt="Image">
         <div class="heading_cntct">Connect with Me!</div>
             <div class="heading_cntct_2">If you have any questions, please contact tamuusa.publicrelations@gmail.com or fill out the form at the very bottom!
             </div>
@@ -12,7 +13,7 @@
                 <div class="cont_card_item">
                     <div class="cont_card_inner">
                       <a href="https://www.linkedin.com">
-                        <img src="C:\Users\12146\Portfolio\backend\venv\static\img\linkedin-logo-white-png-4.png">
+                        <img src="{{ url_for('static', filename='/img/linkedin-logo-white-png-4.png') }}">
                         <div class="s_media">LinkedIn</div>
                         <div class="s_media_p">Follow ME on linkedin here to stay updated on the latest
                         </div>
@@ -22,7 +23,7 @@
                 <div class="cont_card_item">
                     <div class="cont_card_inner">
                       <a href="https://www.instagram.com">
-                        <img src="backend\venv\static\img\instagram_img_b.png" >
+                        <img src="{{ url_for('static', filename='/img/instagram_img_b.png') }}" >
                         <div class="s_media">Instagram</div>
                         <div class="s_media_p">Click or search to follow us @tamumsa for the latest updates on our posts and stories!
                         </div>
@@ -42,7 +43,7 @@
                 <div class="cont_card_item">
                     <div class="cont_card_inner">
                       <a href="">
-                        <img src="backend\venv\static\img\mail_logo.jpg">
+                        <img src="{{ url_for('static', filename='/img/mail_logo.jpg') }}">
                         <div class="s_media">Email</div>
                         <div class="s_media_p">Subscribe for Emails to stay updated
                         </div>
