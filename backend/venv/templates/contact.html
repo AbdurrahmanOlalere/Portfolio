@@ -3,8 +3,8 @@
 {% block content %}
 <main class="site-main">
     <body class="c_body">
-        <div class="container_cntct">
-          <img src="{{ url_for('static', filename='img/swords.png/sword_1.png') }}" alt="Image">
+        <div id ="" class="container_cntct">
+          <img src="{{ url_for('static', filename='img/swords/sword_1.png') }}" alt="Image">
         <div class="heading_cntct">Connect with Me!</div>
             <div class="heading_cntct_2">If you have any questions, please contact tamuusa.publicrelations@gmail.com or fill out the form at the very bottom!
             </div>
@@ -33,7 +33,7 @@
                 <div class="cont_card_item">
                     <div class="cont_card_inner">
                       <a href="https://www.facebook.com/tamumsa/">
-                        <img src="./img/facebook_logo.png">
+                        <img src="{{ url_for('static', filename='/img/instagram_img_b.png') }}">
                         <div class="s_media">Facebook</div>
                         <div class="s_media_p">Click or search for Muslim Students' Association of Texas A&M University and like our page!
                         </div>

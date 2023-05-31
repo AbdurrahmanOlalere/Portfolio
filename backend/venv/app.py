@@ -1,6 +1,8 @@
-from flask import Flask, render_template,request
 import db as db
 import mail as mail
+import os
+from flask import Flask,render_template,request, jsonify
+
 
 app = Flask(__name__)
 
@@ -11,6 +13,12 @@ def contact():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/get_images', methods=['GET'])
+def get_images():
+    image_folder = os.path.join(app.static_folder, 'img','swords')  # Folder path where images are stored
+    images = [os.path.join(image_folder, filename) for filename in os.listdir(image_folder)]
+    return jsonify({'images': images})
 
 @app.route('/insert', methods = ['POST'])
 def insert():

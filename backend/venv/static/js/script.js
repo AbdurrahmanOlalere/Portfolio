@@ -1,38 +1,38 @@
-box = document.getElementById("imageContainer")
+$(document).ready(function() {
+    var imageContainer = $('#image-container');
+    var images = [];  // Array to store image paths
 
-function bgChange(){
-    box.style.backgroundImage = 'url("' + img + '")' 
-}
-
-function fetchImages() {
-    fetch("{{ url_for('static', filename='/img/swords.png') }}")
-        .then(response => response.json())
-        .then(data => {
-            var images = data.images; //array of images
-            var currentIndex = 0; //current index of the images
-            var imageContainer = document.getElementById("imageContainer")
-
-            function animateBackgroudImages() {
-                currentIndex++; //Increment the index
-
-                if (currentIndex >= images.length ) {
-                    currentIndex = 0;
-                }
-
-                var imagePath = "{{ url_for('static', filename='img/swords.png/') }}" + images[currentIndex];
-                imageContainer.innerHTML = "<img src='" + imagePath + "'>";
-
-                setTimeout(scrollBackgroundImages, 2000); // Call the function again after 2 seconds (adjust as needed)
-                
-  
+    // Function to load image paths from a folder
+    function loadImagesFromFolder() {
+        $.ajax({
+            url: '/get_images',  // Flask route to retrieve image paths
+            method: 'GET',
+            success: function(response) {
+                images = response.images;
+                startImageLoop();
+            },
+            error: function(error) {
+                console.error('Error loading images:', error);
             }
-
-            //Start image scrolling
-            animateBackgroudImages();
-
-        })
-        .catch(error => {
-            console.log('Error fetching images:', error);
         });
+    }
 
-}
+    // Function to start the image loop
+    function startImageLoop() {
+        var currentIndex = 0;
+        var totalImages = images.length;
+
+        function displayImage() {
+            var imagePath = images[currentIndex];
+            imageContainer.attr('src', imagePath);
+
+            currentIndex = (currentIndex + 1) % totalImages;  // Loop through images
+
+            setTimeout(displayImage, 2000);  // Delay between image changes (in milliseconds)
+        }
+
+        displayImage();  // Start displaying images
+    }
+
+    loadImagesFromFolder();  // Load images from the folder
+});

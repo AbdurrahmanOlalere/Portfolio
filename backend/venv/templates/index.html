@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
+{% block title %} Home {% endblock %}
+
 {% block content %}
-    <h1>{% block title %} Home {% endblock %}</h1>
-    <section-body id="#imageContainer"></section-body>
-    <script>fetchImages();</script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+    <div id = "image-container" class = "container_cntact" >
+        <img id= "image" src="" alt="Image Loop">
+    </div>
     <h1>Hello World!</h1>
     <h2>Welcome to My Portfolio!</h2>
     <h3>{{ utc_dt }}</h3>
