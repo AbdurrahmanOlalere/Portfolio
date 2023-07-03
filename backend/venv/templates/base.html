@@ -41,11 +41,49 @@
         </div>
     </nav>
     <div class="container-fluid">
-    <canvas id="gif-canvas" style="width: 100%; height: 100%;"></canvas>
+            <!-- Container for animated images -->
+    <div class="animation-container" style="width: 100%; height: 75%;">
+    </div>
+
     <script>
-        const imageFiles = JSON.parse(`{{ image_files_json|tojson }}`);
+        const container = document.querySelector('.animation-container');
+
+        // Function to display images as animation
+        function displayAnimation(imageUrls) {
+            let currentIndex = 0;
+
+            function showImage() {
+                const image = new Image();
+                image.onload = function() {
+                    const animatedImage = document.createElement('img');
+                    animatedImage.src = image.src;
+                    container.innerHTML = '';
+                    container.appendChild(animatedImage);
+                };
+                image.src = imageUrls[currentIndex];
+
+                currentIndex++;
+                if (currentIndex >= imageUrls.length) {
+                    currentIndex = 0;
+                }
+
+                setTimeout(showImage, 200); // Adjust the delay as per your requirements
+            }
+
+            showImage();
+        }
+
+        // Make a GET request to retrieve the image URLs
+        fetch('/get_images')
+            .then(response => response.json())
+            .then(data => {
+                const imageUrls = data.image_urls;
+                displayAnimation(imageUrls);
+            })
+            .catch(error => console.log(error));
     </script>
-    <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+    <!-- <canvas id="gif-canvas" style="width: 100%; height: 100%;"></canvas>
+    <script src="{{ url_for('static', filename='/js/script.js') }}"></script> -->
         {% block content %}
         {% endblock %}
     </div>
