@@ -7,10 +7,9 @@
     <!-- Include Bootstrap CSS and JS files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src= "{{ url_for('static', filename='/js/script.js') }}"></script>
     <!--  font awesome icons  -->
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/all.min.css') }}">
-    <!-- Include custom CSS and JS files -->
+    <!-- Include custom CSS files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/normalize.css') }}">
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
@@ -40,54 +39,17 @@
             </ul>
         </div>
     </nav>
-    <div class="container-fluid">
-            <!-- Container for animated images -->
-    <div class="animation-container" style="width: 100%; height: 75%;">
-    </div>
+    <!-- <div class="container-fluid"> -->
+        <!-- Container for animated images -->
+    <div class="animation-container" style="width: 100%; height: 75%;"></div>
+    <!-- </div> -->
+    <div class=""> 
 
-    <script>
-        const container = document.querySelector('.animation-container');
-
-        // Function to display images as animation
-        function displayAnimation(imageUrls) {
-            let currentIndex = 0;
-
-            function showImage() {
-                const image = new Image();
-                image.onload = function() {
-                    const animatedImage = document.createElement('img');
-                    animatedImage.src = image.src;
-                    container.innerHTML = '';
-                    container.appendChild(animatedImage);
-                };
-                image.src = imageUrls[currentIndex];
-
-                currentIndex++;
-                if (currentIndex >= imageUrls.length) {
-                    currentIndex = 0;
-                }
-
-                setTimeout(showImage, 200); // Adjust the delay as per your requirements
-            }
-
-            showImage();
-        }
-
-        // Make a GET request to retrieve the image URLs
-        fetch('/get_images')
-            .then(response => response.json())
-            .then(data => {
-                const imageUrls = data.image_urls;
-                displayAnimation(imageUrls);
-            })
-            .catch(error => console.log(error));
-    </script>
-    <!-- <canvas id="gif-canvas" style="width: 100%; height: 100%;"></canvas>
-    <script src="{{ url_for('static', filename='/js/script.js') }}"></script> -->
-        {% block content %}
-        {% endblock %}
-    </div>
-
+    {% block content %}
+    {% endblock %}
     
+    </div>
+    <!-- Include the link to script.js -->
+    <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
 </body>
 </html>

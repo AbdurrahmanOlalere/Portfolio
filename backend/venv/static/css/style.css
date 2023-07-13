@@ -175,6 +175,10 @@
   object-fit: contain;
 }
 
+.container {
+  padding: 0;
+}
+
 
 /* Porfolio ends*/
 
@@ -218,6 +222,7 @@
   }
   .container_cntct .heading_cntct{
     text-align: left;
+    padding-left: 20px;
     font-size: 40px;
     font-family: "Roboto Condensed", Sans-serif;
     font-weight: 700;
@@ -572,3 +577,61 @@
       margin-bottom: 40px;
     }
   }
+  /*Main Animated image */
+.animation-container {
+  width: 100vw;  /* Adjust container size as per your requirements */
+  height: 75vh;
+  position: relative;
+  overflow: hidden;
+}
+
+#animated-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* Adjust object-fit property as per your image aspect ratio */
+}
+
+/*blurred navbar and buttons */
+/* Styles for the navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  backdrop-filter: blur(10px); /* Apply blur effect */
+  z-index: 9999; /* Ensure the navbar appears in the foreground */
+}
+
+/* Styles for the navbar links/buttons */
+.navbar-nav .nav-link {
+  backdrop-filter: blur(10px); /* Apply blur effect */
+}
+
+/* Styles for the container with the animated image */
+.animation-container {
+  position: relative;
+  width: 100%;
+  height: 75vh; /* Adjust the height as needed */
+  overflow: hidden; /* Hide overflowing image */
+}
+
+.animation-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('path/to/your/image.jpg') center/cover;
+  z-index: -1;
+  filter: blur(10px); /* Apply blur effect to the background image */
+}
+
+/* Additional styles for the content below the navbar */
+.content {
+  padding-top: 100px; /* Add padding to create space below the fixed navbar */
+}
