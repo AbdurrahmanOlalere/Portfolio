@@ -2,21 +2,33 @@ import db as db
 import mail as mail
 import os
 from flask import Flask, render_template, request, url_for, jsonify
+from flask_caching import Cache
 import json
 import imageio
 
 app = Flask(__name__)
 
+# Create a cache object for images
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+
+# Set cache control headers for static files
+@app.after_request
+def add_cache_control(response):
+    if 'static' in request.url:
+        response.headers['Cache-Control'] = 'public, max-age=3600'  # Set the desired max-age value in seconds
+    return response
+
+
 @app.route('/contact')
 def contact():
-    images_folder = os.path.join(app.static_folder, 'img', 'swords')
+    images_folder = os.path.join(app.static_folder, 'img', 'portal')
 
     # Get the list of image file names in the folder
     image_files = os.listdir(images_folder)
 
     # Retrieve the image file URLs
     image_files_urls = [
-        url_for('static', filename=f'img/swords/{image_file}')
+        url_for('static', filename=f'img/portal/{image_file}') #changed to dragon, then a portal file
         for image_file in image_files
     ]
     # print(image_files_urls) use to check image urls
@@ -30,14 +42,14 @@ def contact():
 
 @app.route('/')
 def index():
-    images_folder = os.path.join(app.static_folder, 'img', 'swords')
+    images_folder = os.path.join(app.static_folder, 'img', 'portal')
 
     # Get the list of image file names in the folder
     image_files = os.listdir(images_folder)
 
     # Retrieve the image file URLs
     image_files_urls = [
-        url_for('static', filename=f'img/swords/{image_file}')
+        url_for('static', filename=f'img/portal/{image_file}')
         for image_file in image_files
     ]
 
@@ -51,25 +63,26 @@ def index():
 
 
 @app.route('/get_images')
+@cache.cached(timeout=3600)  # Cache the result for 3600 seconds (1 hour)
 def get_images():
-    images_folder = os.path.join(app.static_folder, 'img', 'swords')
+    images_folder = os.path.join(app.static_folder, 'img', 'portal')
 
     # Get the list of image file names in the folder
     image_files = sorted(os.listdir(images_folder))
 
     # Retrieve the image file URLs
     image_files_urls = [
-        url_for('static', filename=f'img/swords/{image_file}')
+        url_for('static', filename=f'img/portal/{image_file}')
         for image_file in image_files
     ]
 
     return jsonify({'image_urls': image_files_urls})
 
 
-# this route is giving me some trouble, the gif isn't being displaye i'm so dumb maybe nowthis works becuaase the script is called after the element exists.
+# this route is giving me some trouble, the gif isn't being displayed i'm so dumb maybe nowthis works becuaase the script is called after the element exists.
 @app.route("/generate_gif", methods=["POST"])
 def generate_gif():
-    image_folder = os.path.join(app.static_folder, 'img','swords')
+    image_folder = os.path.join(app.static_folder, 'img','portal')
 
     # Get the list of image file names in the folder
     image_files = os.listdir(image_folder)

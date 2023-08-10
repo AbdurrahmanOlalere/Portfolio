@@ -4,13 +4,29 @@ const container = document.querySelector('.animation-container');
 function displayAnimation(imageUrls) {
 let currentIndex = 0;
 
-function showImage() {
-    const image = new Image();
-    image.onload = function() {
+// Preload images
+    const images = [];
+    for (const imageUrl of imageUrls) {
+        const image = new Image();
+        image.src = imageUrl;
+        images.push(image);
+    }
+
+    // Sort the images by URL before starting the animation
+    images.sort((a, b) => {
+        return a.src.localeCompare(b.src);
+    });
+    
+
+    function showImage() {
+
+        const image = images[currentIndex];
+
+        //image.onload = function() { don't need this since i'm Using Preloaded Images from images Array:
         const animatedImage = document.createElement('img');
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
-        const imgHeight = screenHeight * 1;
+        const imgHeight = screenHeight * 0.75;
         const imgWidth = screenWidth;
 
         animatedImage.src = image.src;
@@ -26,17 +42,17 @@ function showImage() {
         container.appendChild(animatedImage);
         
         }
-        
-        
-    };
-    image.src = imageUrls[currentIndex];
+            
+            
+        //};
+        //image.src = imageUrls[currentIndex]; don't need this either since i've preloaded the images
 
-    currentIndex++;
-    if (currentIndex >= imageUrls.length) {
-    currentIndex = 0;
-    }
+        currentIndex++;
+        if (currentIndex >= imageUrls.length) {
+        currentIndex = 0;
+        }
 
-    setTimeout(showImage, 200); // Adjust the delay as per your requirements
+    setTimeout(showImage, 100); // Adjust the delay as per your requirements
 }
 
 showImage();
