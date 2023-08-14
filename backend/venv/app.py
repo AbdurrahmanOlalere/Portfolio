@@ -13,7 +13,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 # Set cache control headers for static files
 @app.after_request
-def add_cache_control(response):
+def add_cache_control(response):  
     if 'static' in request.url:
         response.headers['Cache-Control'] = 'public, max-age=3600'  # Set the desired max-age value in seconds
     return response
@@ -24,7 +24,7 @@ def contact():
     images_folder = os.path.join(app.static_folder, 'img', 'portal')
 
     # Get the list of image file names in the folder
-    image_files = os.listdir(images_folder)
+    image_files = os.listdir(images_fo lder)
 
     # Retrieve the image file URLs
     image_files_urls = [
