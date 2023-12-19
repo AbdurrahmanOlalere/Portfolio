@@ -36,7 +36,7 @@ def create_Details_table():
 # Function to create a table
 def create_table(table_name, columns):
     with conn.cursor() as cursor:
-        # Generate the CREATE TABLE query dynamically
+        # Generate the CREATE TABLE query dynamically , i'mtrying to make this a bit more flexible, maybe i should make a funciton with more args like not primary keys and such
         create_table_query = sql.SQL(
             "CREATE TABLE IF NOT EXISTS {} ({})"
         ).format(
