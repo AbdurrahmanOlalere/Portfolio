@@ -24,7 +24,7 @@ def contact():
     images_folder = os.path.join(app.static_folder, 'img', 'portal')
 
     # Get the list of image file names in the folder
-    image_files = os.listdir(images_fo lder)
+    image_files = os.listdir(images_folder)
 
     # Retrieve the image file URLs
     image_files_urls = [
