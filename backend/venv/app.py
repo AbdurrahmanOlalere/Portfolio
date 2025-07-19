@@ -11,11 +11,15 @@ app = Flask(__name__)
 # Create a cache object for images
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
+# Ensure the database and table are created before handling requests
+# @app.before_request
+
+
 # Set cache control headers for static files
 @app.after_request
 def add_cache_control(response):  
     if 'static' in request.url:
-        response.headers['Cache-Control'] = 'public, max-age=3600'  # Set the desired max-age value in seconds
+        response.headers['Cache-Control'] = 'public, max-age=3600'  # Setting the desired max-age value in seconds
     return response
 
 
@@ -60,6 +64,25 @@ def index():
     image_files_json = json.dumps(image_files_list)
     return render_template('index.html', image_files_json=image_files_json)
 
+@app.route('/projects')
+def projects():
+    images_folder = os.path.join(app.static_folder, 'img', 'portal')
+
+    # Get the list of image file names in the folder
+    image_files = os.listdir(images_folder)
+
+    # Retrieve the image file URLs
+    image_files_urls = [
+        url_for('static', filename=f'img/portal/{image_file}')
+        for image_file in image_files
+    ]
+
+    # Convert the image file URLs to a regular list of strings
+    image_files_list = [str(url) for url in image_files_urls]
+
+    # Convert the image files list to JSON
+    image_files_json = json.dumps(image_files_list)
+    return render_template('project.html', image_files_json=image_files_json)
 
 
 @app.route('/get_images')
@@ -114,5 +137,6 @@ def insert():
         return render_template('contact.html', var=var)
     
 if __name__ == "__main__":
-    
+    db.create_database('portfoliodb')
+    db.create_Details_table()
     app.run(host = 'localhost', port = '5000', debug=True)
