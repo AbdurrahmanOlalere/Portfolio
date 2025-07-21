@@ -1,7 +1,7 @@
 import db as db
 import mail as mail
 import os
-from flask import Flask, render_template, request, url_for, jsonify
+from flask import Flask, render_template, request, url_for, jsonify 
 from flask_caching import Cache
 import json
 import imageio
