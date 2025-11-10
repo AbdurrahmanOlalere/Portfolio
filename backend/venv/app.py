@@ -140,5 +140,8 @@ def insert():
     
 if __name__ == "__main__":
     db.create_database('portfoliodb')
-    db.create_Details_table()
+    # don't call db.create_Details_table() on every app start
+    # if you have it, remove or guard it behind an env flag:
+    # if os.environ.get("INIT_DB_AS_ADMIN") == "1":
+    #     db.create_Details_table()
     app.run(host = 'localhost', port = '5000', debug=True)

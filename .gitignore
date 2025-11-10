@@ -1,1 +1,4 @@
 backend/venv/key.py
+backend\scripts\init_db_admin.py
+backend\venv\pyvenv.cfg
+backend\venv\test.py

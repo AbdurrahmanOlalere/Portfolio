@@ -34,8 +34,17 @@ def create_Details_table():
                     message VARCHAR(200)
                 )
             """)
-            cursor.execute(create_table_query)
-            conn.commit()
+            try:
+                cursor.execute(create_table_query)
+                conn.commit()
+            except Exception as e:
+                # permission denied -> log and continue (app will still work if tables exist)
+                # Replace print with your logger if present
+                import psycopg2
+                if isinstance(e, psycopg2.errors.InsufficientPrivilege):
+                    print("Warning: no CREATE permission on schema public; skipping table creation.")
+                else:
+                    raise
 
 # Function to create a table dynamically
 def create_table(table_name, columns):
