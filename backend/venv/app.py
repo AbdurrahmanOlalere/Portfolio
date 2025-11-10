@@ -5,6 +5,8 @@ from flask import Flask, render_template, request, url_for, jsonify
 from flask_caching import Cache
 import json
 import imageio
+import db
+# db.create_Details_table()  # moved to main guard below
 
 app = Flask(__name__)
 

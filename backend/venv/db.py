@@ -87,3 +87,8 @@ def get_details():
     return details
 
 
+# function to delete all records from Details table
+
+if __name__ == "__main__":
+    # run only when executed as a script (not on import)
+    create_Details_table()
