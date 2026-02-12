@@ -1,102 +1,121 @@
 {% extends 'base.html' %}
-<script>
-  const imageFiles = JSON.parse('{{ image_files_json | safe }}');
-</script>
+
+{% block title %} Contact {% endblock %}
+
 {% block content %}
 <main class="site-main">
-    <body class="c_body">
-        <div id ="" class="container_cntct">
-        <div class="heading_cntct">Connect with Me!</div>
-            <div class="heading_cntct_2">
+
+<div class="c_body">
+
+    <!-- Page Heading -->
+    <div class="container_cntct">
+        <h1 class="heading_cntct">Connect with Me!</h1>
+        <p class="heading_cntct_2"></p>
+    </div>
+
+    <!-- Social Media Cards -->
+    <div class="cont_card_wrap">
+
+        <div class="cont_card_item">
+            <div class="cont_card_inner">
+              <a href="https://www.linkedin.com">
+                <img src="{{ url_for('static', filename='img/linkedin-logo-white-png-4.png') }}">
+                <div class="s_media">LinkedIn</div>
+                <div class="s_media_p">Follow me on LinkedIn to stay updated.</div>
+              </a>
             </div>
         </div>
-            <div class="cont_card_wrap"> <!--'create social media cards here'-->
-                <div class="cont_card_item">
-                    <div class="cont_card_inner">
-                      <a href="https://www.linkedin.com">
-                        <img src="{{ url_for('static', filename='/img/linkedin-logo-white-png-4.png') }}">
-                        <div class="s_media">LinkedIn</div>
-                        <div class="s_media_p">Follow ME on linkedin here to stay updated on the latest
-                        </div>
-                      </a>
-                    </div>
-                </div>
-                <div class="cont_card_item">
-                    <div class="cont_card_inner">
-                      <a href="https://www.instagram.com">
-                        <img src="{{ url_for('static', filename='/img/instagram_img_b.png') }}" >
-                        <div class="s_media">Instagram</div>
-                        <div class="s_media_p">Click or search to follow us @tamumsa for the latest updates on our posts and stories!
-                        </div>
-                      </a>
-                    </div>
-                </div>
-                <div class="cont_card_item">
-                    <div class="cont_card_inner">
-                      <a href="https://www.facebook.com/tamumsa/">
-                        <img src="{{ url_for('static', filename='/img/instagram_img_b.png') }}">
-                        <div class="s_media">Facebook</div>
-                        <div class="s_media_p">Click or search for Muslim Students' Association of Texas A&M University and like our page!
-                        </div>
-                      </a>s
-                    </div>
-                </div>
-                <div class="cont_card_item">
-                    <div class="cont_card_inner">
-                      <a href="">
-                        <img src="{{ url_for('static', filename='/img/mail_logo.jpg') }}">
-                        <div class="s_media">Email</div>
-                        <div class="s_media_p">Subscribe for Emails to stay updated
-                        </div>
-                      </a>
-                    </div>
-                </div>
+
+        <div class="cont_card_item">
+            <div class="cont_card_inner">
+              <a href="https://www.instagram.com">
+                <img src="{{ url_for('static', filename='img/instagram_img_b.png') }}">
+                <div class="s_media">Instagram</div>
+                <div class="s_media_p">Follow us @tamumsa for updates.</div>
+              </a>
             </div>
-        <div class="FormContainer">
-          <div class="contactInfo">
+        </div>
+
+        <div class="cont_card_item">
+            <div class="cont_card_inner">
+              <a href="https://www.facebook.com/tamumsa/">
+                <img src="{{ url_for('static', filename='img/instagram_img_b.png') }}">
+                <div class="s_media">Facebook</div>
+                <div class="s_media_p">Like our page!</div>
+              </a>
+            </div>
+        </div>
+
+        <div class="cont_card_item">
+            <div class="cont_card_inner">
+              <a href="#">
+                <img src="{{ url_for('static', filename='img/mail_logo.jpg') }}">
+                <div class="s_media">Email</div>
+                <div class="s_media_p">Subscribe for email updates.</div>
+              </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Contact Form + Info -->
+    <div class="FormContainer">
+
+        <!-- Left Info Boxes -->
+        <div class="contactInfo">
+
             <div class="c_box">
               <div class="text">
                 <h3>Address</h3>
                 <p>3645 Wellborn Rd, Bryan, TX 77801</p>
               </div>
             </div>
+
             <div class="c_box">
               <div class="text">
                 <h3>Hours</h3>
-                <p>5AM-1AM</p>
+                <p>5AM – 1AM</p>
               </div>
             </div>
-              <div class="c_box">
-                <div class="text">
-                  <h3>Phone</h3>
-                  <p>(979) 985-5218</p>
-                </div>
-              </div>
-          </div>
 
-          <div class = "contact_form">
-            <form action= 'http://localhost:5000/insert' method="POST" >
-              <h2>Send Me a Message</h2>
+            <div class="c_box">
+              <div class="text">
+                <h3>Email</h3>
+                <p>olalereabdurrahman@gmail.com</p>
+              </div>
+            </div>
+
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact_form">
+            <form action="{{ url_for('insert') }}" method="POST">
+                <h2>Send Me a Message</h2>
+
                 <div class="input_box">
-                  <input type="text" name ="name" required="required">
-                  <span>Full Name</span> <!--span as tranformation in style.css-->
-                </div> 
-                <div class="input_box">
-                  <input type="email" name ="email" required="required">
-                  <span>Email</span>
+                    <input type="text" name="name" required>
+                    <span>Full Name</span>
                 </div>
+
                 <div class="input_box">
-                  <textarea name = 'message' required="required"></textarea>
-                  <span>Type your Message...</span>
+                    <input type="email" name="email" required>
+                    <span>Email</span>
                 </div>
+
                 <div class="input_box">
-                  <input type="submit" name ="submit" value="Send">
+                    <textarea name="message" required></textarea>
+                    <span>Type your message...</span>
+                </div>
+
+                <div class="input_box">
+                    <input type="submit" value="Send">
                 </div>
             </form>
-          </div>
-        </div>           
-      </body>
+        </div>
+
+    </div>
+
+</div>
+
+</main>
 {% endblock %}
-
-    
-

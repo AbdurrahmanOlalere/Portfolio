@@ -1,71 +1,49 @@
-const container = document.querySelector('.animation-container');
+window.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('animated-gallery');
+    if (!container) return;
 
-// Function to display images as animation
-function displayAnimation(imageUrls) {
-let currentIndex = 0;
+    let imageFiles = [];
+    const dataEl = document.getElementById('image-data');
 
-// Preload images
-    const images = [];
-    for (const imageUrl of imageUrls) {
-        const image = new Image();
-        image.src = imageUrl;
-        images.push(image);
+    if (dataEl) {
+        try { imageFiles = JSON.parse(dataEl.textContent || '[]'); }
+        catch (e) { console.error('Invalid image JSON:', e); }
     }
 
-    // Sort the images by URL before starting the animation
-    images.sort((a, b) => {
-        return a.src.localeCompare(b.src);
+    if (!Array.isArray(imageFiles) || imageFiles.length === 0) {
+        console.warn('No images to display');
+        return;
+    }
+
+    // CREATE TWO SLIDES
+    const slides = [document.createElement('div'), document.createElement('div')];
+    slides.forEach(s => {
+        s.className = 'bg-slide';
+        container.appendChild(s);
     });
-    
 
-    function showImage() {
+    // Preload images
+    const preload = src => new Promise(res => {
+        const i = new Image();
+        i.onload = () => res(src);
+        i.src = src;
+    });
 
-        const image = images[currentIndex];
+    Promise.all(imageFiles.map(preload)).then(() => {
+        let current = 0;
+        slides[0].style.backgroundImage = `url("${imageFiles[0]}")`;
+        slides[0].classList.add('visible');
 
-        //image.onload = function() { don't need this since i'm Using Preloaded Images from images Array:
-        const animatedImage = document.createElement('img');
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
-        const imgHeight = screenHeight * 0.75;
-        const imgWidth = screenWidth;
+        setInterval(() => {
+            const next = (current + 1) % imageFiles.length;
+            const slideToShow = slides[next % 2];
+            const slideToHide = slides[current % 2];
 
-        animatedImage.src = image.src;
-        animatedImage.id = 'animated-image'; // Set the id attribute
+            slideToShow.style.backgroundImage = `url("${imageFiles[next]}")`;
+            slideToShow.classList.add('visible');
+            slideToHide.classList.remove('visible');
 
-        // Styling the img for proper scale
-        animatedImage.style.height = `${imgHeight}px`;
-        animatedImage.style.width = `${imgWidth}px`;
-
-        // Check if container exists before setting innerHTML
-        if (container != null) {
-        container.innerHTML = '';
-        container.appendChild(animatedImage);
-        
-        }
-            
-            
-        //};
-        //image.src = imageUrls[currentIndex]; don't need this either since i've preloaded the images
-
-        currentIndex++;
-        if (currentIndex >= imageUrls.length) {
-        currentIndex = 0;
-        }
-
-    setTimeout(showImage, 100); // Adjust the delay as per your requirements
-}
-
-showImage();
-}
-
-// Make a GET request to retrieve the image URLs
-fetch('/get_images')
-.then(response => response.json())
-.then(data => {
-    const imageUrls = data.image_urls;
-    displayAnimation(imageUrls);
-})
-.catch(error => console.log(error));
-
-
-
+            current = next;
+        }, 3000);
+    });
+});

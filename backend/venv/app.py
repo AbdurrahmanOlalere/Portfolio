@@ -1,21 +1,26 @@
 import db as db
+import migration as migration
 import mail as mail
 import os
-from flask import Flask, render_template, request, url_for, jsonify 
+from flask import Flask, render_template, request, url_for, jsonify, redirect
 from flask_caching import Cache
 import json
 import imageio
-import db
 # db.create_Details_table()  # moved to main guard below
 
 app = Flask(__name__)
-
-# Create a cache object for images
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
-# Ensure the database and table are created before handling requests
-# @app.before_request
-
+def list_images(subfolder='portal'):
+    images_folder = os.path.join(app.static_folder, 'img', subfolder)
+    try:
+        files = sorted(
+            f for f in os.listdir(images_folder)
+            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp'))
+        )
+    except FileNotFoundError:
+        return []
+    return [url_for('static', filename=f'img/{subfolder}/{f}') for f in files]
 
 # Set cache control headers for static files
 @app.after_request
@@ -48,23 +53,8 @@ def contact():
 
 @app.route('/')
 def index():
-    images_folder = os.path.join(app.static_folder, 'img', 'portal')
-
-    # Get the list of image file names in the folder
-    image_files = os.listdir(images_folder)
-
-    # Retrieve the image file URLs
-    image_files_urls = [
-        url_for('static', filename=f'img/portal/{image_file}')
-        for image_file in image_files
-    ]
-
-    # Convert the image file URLs to a regular list of strings
-    image_files_list = [str(url) for url in image_files_urls]
-
-    # Convert the image files list to JSON
-    image_files_json = json.dumps(image_files_list)
-    return render_template('index.html', image_files_json=image_files_json)
+    image_files = list_images()  # now defined above
+    return render_template('index.html', image_files=image_files)
 
 @app.route('/projects')
 def projects():
@@ -123,25 +113,26 @@ def generate_gif():
     return jsonify({"gif_url": gif_path})
  
 
-@app.route('/insert', methods = ['POST'])
+@app.route('/insert', methods=['POST'])
 def insert():
-    
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
-        mail.send_email(name,email,message)
-        db.insert_details(name,email,message)
-        details = db.get_details()
-        print(details)
-        for detail in details:
-            var = detail
-        return render_template('contact.html', var=var)
+    name = request.form.get('name')
+    email = request.form.get('email')
+    message = request.form.get('message')
+    try:
+        db.insert_details(name, email, message)
+        # optional: send email, logging, etc.
+        return redirect(url_for('contact'))
+    except Exception as e:
+        print("Insert failed:", e)
+        # still redirect back to contact (optionally show an error message)
+        return redirect(url_for('contact'))
     
 if __name__ == "__main__":
-    db.create_database('portfoliodb')
-    # don't call db.create_Details_table() on every app start
-    # if you have it, remove or guard it behind an env flag:
-    # if os.environ.get("INIT_DB_AS_ADMIN") == "1":
-    #     db.create_Details_table()
-    app.run(host = 'localhost', port = '5000', debug=True)
+    # Run migrations only once (not on every Flask reload in debug mode)
+    import sys
+    if 'werkzeug.serving' not in sys.modules:  # only on first startup, not on reload
+        print("Running migrations...")
+        migration.create_details_table()
+        print("Migrations complete.")
+    
+    app.run(host='localhost', port='5000', debug=True)

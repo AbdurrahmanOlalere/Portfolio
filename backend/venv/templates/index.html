@@ -2,11 +2,47 @@
 
 {% block title %} Home {% endblock %}
 
-
 {% block content %}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <div class="container_cntct">
+<main class="site-main">
+
+<div class="home_body">
+
+    <!-- Heading -->
+    <div class="home_header">
+        <h1>Welcome to My Portfolio</h1>
+        <p>Cybersecurity • ServiceNow • Automation • Cloud • Integrations</p>
     </div>
-    <h1>Welcome to My Portfolio!</h1>
-    <h3>{{ utc_dt }}</h3>
+
+    <!-- Card Row -->
+    <div class="home_card_wrap">
+
+        <div class="home_card_item">
+            <div class="home_card_inner">
+                <h2>About Me</h2>
+                <p>Learn about my background in cybersecurity, ServiceNow, integrations, and automation.</p>
+                <a href="/about" class="home_btn">Learn More</a>
+            </div>
+        </div>
+
+        <div class="home_card_item">
+            <div class="home_card_inner">
+                <h2>Projects</h2>
+                <p>Explore my hands-on projects in SIEM, ServiceNow development, threat detection, and integrations.</p>
+                <a href="/projects" class="home_btn">View Projects</a>
+            </div>
+        </div>
+
+        <div class="home_card_item">
+            <div class="home_card_inner">
+                <h2>Contact</h2>
+                <p>Want to reach me? Send a direct message or connect on social platforms.</p>
+                <a href="/contact" class="home_btn">Contact Me</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</main>
 {% endblock %}

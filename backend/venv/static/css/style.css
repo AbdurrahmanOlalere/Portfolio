@@ -18,7 +18,7 @@
 
 
 
-#html{
+html{
     font-family: montserrat;
 }
 
@@ -198,13 +198,13 @@
     flex-direction: column;
     background-image:
     linear-gradient(to bottom, rgba(0, 50, 126, 0.52), rgba(255, 255, 255, 0.73));
-    background-attachment: fixed top;
+    background-attachment: fixed;
     background-position: top;
     width: 100%;
     background-size: cover;
     color: rgb(0, 0, 0);
-    z-index:-1;
-    
+    z-index: 0;
+
   }
   .container_cntct img{
     width: 100%;
@@ -218,9 +218,8 @@
     font-family: "Roboto Condensed", Sans-serif;
     font-size: 65px;
     font-weight: 700;
-
-
-
+    text-align: center;
+    padding-top: 40px;
   }
   .container_cntct .heading_cntct{
     text-align: left;
@@ -581,19 +580,26 @@
   }
   /*Main Animated image */
 .animation-container {
-  width: 100vw;  /* Adjust container size as per your requirements */
-  height: 75vh;
-  position: relative;
-  overflow: hidden;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 75%;
+    overflow: hidden;
+    pointer-events: none;
 }
 
-#animated-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;  /* Adjust object-fit property as per your image aspect ratio */
+.animation-container .bg-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.animation-container .bg-slide.visible {
+    opacity: 1;
 }
 
 /*blurred navbar and buttons */
@@ -612,28 +618,167 @@
 .navbar-nav .nav-link {
   backdrop-filter: blur(10px); /* Apply blur effect */
 }
-
-/* Styles for the container with the animated image */
-.animation-container {
-  position: relative;
-  width: 100%;
-  height: 75vh; /* Adjust the height as needed */
-  overflow: hidden; /* Hide overflowing image */
-}
-
-.animation-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('path/to/your/image.jpg') center/cover;
-  z-index: -1;
-  filter: blur(10px); /* Apply blur effect to the background image */
-}
-
 /* Additional styles for the content below the navbar */
 .content {
   padding-top: 100px; /* Add padding to create space below the fixed navbar */
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hero-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(85%);
+}
+
+.hero-logo {
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.hero-logo img {
+    width: 180px;
+}
+
+/* floating map buttons */
+.icon {
+    width: 50px;
+    height: 50px;
+    background: #ffa94d;
+    border-radius: 50%;
+    position: absolute;
+    opacity: 0.9;
+}
+
+/* Example positions like the screenshot */
+.icon-1 { top: 40%; left: 30%; }
+.icon-2 { top: 55%; left: 60%; }
+.icon-3 { top: 20%; right: 15%; }
+.icon-4 { top: 70%; left: 45%; }
+
+.overview-box {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    width: 320px;
+    padding: 20px;
+    background: rgba(0,0,0,0.45);
+    border-radius: 10px;
+    color: white;
+}
+
+.book-btn {
+    margin-top: 10px;
+    background: #ffb04c;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.award-badge {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 3px solid #ffb04c;
+    font-weight: 600;
+}
+
+.navbar a {
+    color: white !important;
+    font-weight: 500;
+}
+
+
+
+/* Main wrapper */
+.home_body {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
+/* Heading */
+.home_header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.home_header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Card Layout */
+.home_card_wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+}
+
+.home_card_item {
+    width: 300px;
+}
+
+.home_card_inner {
+    background: rgba(0, 0, 0, 0.55);
+    padding: 25px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    transition: 0.25s ease;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.home_card_inner:hover {
+    transform: translateY(-6px);
+    background: rgba(0, 0, 0, 0.75);
+}
+
+/* Card elements */
+.home_card_inner h2 {
+    color: #fff;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.home_card_inner p {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+/* Button */
+.home_btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #ffffff;
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.25s;
+}
+
+.home_btn:hover {
+    background: #dcdcdc;
 }
