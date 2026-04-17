@@ -12,3 +12,4 @@ Werkzeug==1.0.1
 psycopg2-binary==2.9.3
 Flask==3.1.2
 flask_caching== 2.37.2
+requests==2.33.1

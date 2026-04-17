@@ -2,6 +2,8 @@ import db as db
 import migration as migration
 import mail as mail
 import os
+import requests
+import migration as dbUtils
 from flask import Flask, render_template, request, url_for, jsonify, redirect
 from flask_caching import Cache
 import json
@@ -112,7 +114,7 @@ def generate_gif():
 
     return jsonify({"gif_url": gif_path})
  
-
+ 
 @app.route('/insert', methods=['POST'])
 def insert():
     name = request.form.get('name')
@@ -126,7 +128,23 @@ def insert():
         print("Insert failed:", e)
         # still redirect back to contact (optionally show an error message)
         return redirect(url_for('contact'))
-    
+
+#TESTING EXTERNAL_APIT FILE
+@app.route('/external_api/sync_user', methods=['POST'])
+def sync_user():
+    url = 'http://localhost:5001/api/data'
+    #call localhost 5001 apt here
+    response = requests.get(url)
+    #get user data
+    user_data = response.json()
+    #loop through user data
+    #create user table if it doesn't exist
+    dbUtils.create_table(user_table, [('id', 'SERIAL PRIMARY KEY'), ('name', 'VARCHAR(100)'), ('email', 'VARCHAR(100)')])
+    for user in user_data:
+        #inset into database
+        db.insert_user(user)
+    #return result(success or failure)
+
 if __name__ == "__main__":
     # Run migrations only once (not on every Flask reload in debug mode)
     import sys
